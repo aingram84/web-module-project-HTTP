@@ -9,6 +9,8 @@ import MovieHeader from './components/MovieHeader';
 import FavoriteMovieList from './components/FavoriteMovieList';
 
 import axios from 'axios';
+import EditMovieForm from "./components/EditMovieForm";
+import AddMovieForm from "./components/AddMovieForm";
 
 const App = (props) => {
   const [movies, setMovies] = useState([]);
@@ -25,14 +27,11 @@ const App = (props) => {
   }, []);
 
   const deleteMovie = (id) => {
-    // Make a DELETE request using Axios
-    // On success update the movies list in state
-    // and navigate the user to /movies
-    // Hand this function down to the correct component
+    setMovies(movies.filter(item=>(item.id !== Number(id))))
   }
 
   const addToFavorites = (movie) => {
-    // Stretch goal, see the README
+
   }
 
   return (
@@ -48,8 +47,14 @@ const App = (props) => {
 
           <Routes>
             <Route path="movies/edit/:id" />
+            <EditMovieForm setMovies={setMovies} />
 
             <Route path="movies/:id" />
+            <Movie deleteMovie={deleteMovie} />
+
+            <Route path='movies/add'>
+              <AddMovieForm setMovies={setMovies} />
+            </Route>
 
             <Route path="movies" element={<MovieList movies={movies} />} />
 
